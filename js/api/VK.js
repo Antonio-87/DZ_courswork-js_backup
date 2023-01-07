@@ -13,7 +13,10 @@ class VK {
    * Получает изображения
    * */
   static get(id = '', callback){
-
+    this.lastCallback = callback;
+    let script = document.createElement('script');
+    script.src = `https://api.vk.com/method/photos.get?owner_id=${id}&album_id=profile&access_token=${this.ACCESS_TOKEN}&v=5.131&callback=VK.processData`;
+    document.getElementsByTagName("body")[0].appendChild(script);
   }
 
   /**
@@ -21,6 +24,20 @@ class VK {
    * Является обработчиком ответа от сервера.
    */
   static processData(result){
-
-  }
+    document.querySelector('body').lastElementChild.remove();
+    if (result['error'] == undefined || result != undefined) {
+      let imgList = result.response.items
+      let urlList = [];
+      imgList.forEach(element => {
+          let bigsize = element['sizes'][element['sizes'].length - 1]['url'];
+          if (bigsize) {
+            urlList.push(bigsize);
+            }
+        });
+        return urlList;
+    } else {
+        alert('Ошибка :' + result['error']['error_code'] + '-' + result['error']['error_msg']);
+    }
+    this.lastCallback = () => {};
+  };
 }
