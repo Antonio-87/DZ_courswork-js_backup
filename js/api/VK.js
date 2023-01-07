@@ -25,7 +25,7 @@ class VK {
    */
   static processData(result){
     document.querySelector('body').lastElementChild.remove();
-    if (result['error'] == undefined || result != undefined) {
+    if (result['error'] == undefined) {
       let imgList = result.response.items
       let urlList = [];
       imgList.forEach(element => {

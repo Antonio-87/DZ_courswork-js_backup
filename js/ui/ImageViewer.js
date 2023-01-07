@@ -4,7 +4,8 @@
  * */
 class ImageViewer {
   constructor( element ) {
-
+    this.element = element;
+    
   }
 
   /**
