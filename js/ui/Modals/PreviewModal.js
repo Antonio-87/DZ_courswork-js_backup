@@ -2,9 +2,11 @@
  * Класс PreviewModal
  * Используется как обозреватель загруженный файлов в облако
  */
-class PreviewModal {
-  constructor( element ) {
-
+class PreviewModal extends BaseModal {
+  constructor(BaseModal) {
+    super(BaseModal.element);
+    this.previewerModal = document.querySelector('.uploaded-previewer-modal');
+    this.registerEvents();
   }
 
   /**
@@ -15,6 +17,12 @@ class PreviewModal {
    * Скачивает изображение, если клик был на кнопке download
    */
   registerEvents() {
+    this.previewerModal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('x')) {
+        this.close();
+      }
+    });
+
 
   }
 

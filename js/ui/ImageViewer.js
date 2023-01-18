@@ -5,7 +5,8 @@
 class ImageViewer {
   constructor( element ) {
     this.element = element;
-    
+    this.fluidImage = document.querySelector('.fluid');
+    this.registerEvents();
   }
 
   /**
@@ -18,28 +19,85 @@ class ImageViewer {
    * 5. Клик по кнопке "Отправить на диск" открывает всплывающее окно для загрузки файлов
    */
   registerEvents(){
+    const body = document.querySelector('body');
+    body.addEventListener('dblclick', (e) => {
+      if (e.target.closest('.four')) {
+        this.fluidImage.setAttribute('src', `${e.target.getAttribute('src')}`);
+      }
+    });
 
+    body.addEventListener('click', (e) => {
+      if (e.target.closest('.four')) {
+        e.target.closest('.four').classList.toggle('selected');
+        this.checkButtonText();
+      };
+
+      if (e.target.classList.contains('select-all')) {
+        const images = [...document.querySelectorAll('.four')];
+        const imagesActive = images.filter(el => el.classList.contains('selected'));
+        if (imagesActive.length > 0) {
+          images.forEach(el => el.classList.remove('selected'));
+        } else {
+          images.forEach(el => el.classList.add('selected'));
+        };
+        this.checkButtonText();
+      }
+
+      if (e.target.classList.contains('show-uploaded-files')) {
+        let filePreviewer = App.getModal('filePreviewer');
+        // filePreviewer.open()
+      }
+
+      if (e.target.classList.contains('send')) {
+        let fileUploader = App.getModal('fileUploader');
+      }
+
+    });
   }
 
   /**
    * Очищает отрисованные изображения
    */
   clear() {
-
+    [...document.querySelectorAll('.four')].forEach(el => el.remove());
   }
 
   /**
    * Отрисовывает изображения.
   */
   drawImages(images) {
-
+    const imagesWrapper = document.querySelector('.images-wrapper');
+    if (images.length > 0) {
+      document.querySelector('.select-all').classList.remove('disabled');
+    } else {
+      document.querySelector('.select-all').classList.add('disabled'); 
+    };
+    images.forEach(el => {
+      imagesWrapper.querySelector('.row').innerHTML += `
+      <div class='four wide column ui medium image-wrapper'><img src=${el} /></div>
+      `
+    }); 
   }
 
   /**
    * Контроллирует кнопки выделения всех изображений и отправки изображений на диск
    */
   checkButtonText(){
+    const images = [...document.querySelectorAll('.four')];
+    const imagesActive = images.filter(el => el.classList.contains('selected'));
+    const selectAll = document.querySelector('.select-all');
+    const send = document.querySelector('.send');
+    if (images.length == imagesActive.length) {
+      selectAll.textContent = 'Снять выделение';
+    } else {
+      selectAll.textContent = 'Выбрать все';
+    };
 
+    if (imagesActive.length > 0) {
+      send.classList.remove('disabled');
+    } else {
+      send.classList.add('disabled');
+    };
   }
 
 }

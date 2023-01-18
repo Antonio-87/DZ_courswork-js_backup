@@ -15,14 +15,16 @@ class SearchBlock {
    */
   registerEvents(){
     document.querySelector('.search-block').addEventListener('click', (e) => {
-      const replace = document.querySelector('.replase');
+      const replace = document.querySelector('.replace');
       const add = document.querySelector('.add');
       const input = document.querySelector('input');
       if (e.target == replace || e.target == add) {
         if (input.value.trim() != '') {
-          let images = VK.get(input.value);
-          if (e.target == replace) {App.imageViewer.clear()};
-          App.imageViewer.drawImages(images);
+          if (e.target == replace) {
+            App.imageViewer.clear()
+          } else {
+            VK.get(input.value, App.imageViewer.drawImages);
+          };
         };
       };
     });

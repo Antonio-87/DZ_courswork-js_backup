@@ -6,7 +6,7 @@
  * */
 class VK {
 
-  static ACCESS_TOKEN = '958eb5d439726565e9333aa30e50e0f937ee432e927f0dbd541c541887d919a7c56f95c04217915c32008';
+  static ACCESS_TOKEN = '446fd935f8b8db44469bc06e4de9deac4f9ad0ff4e68c15cdecfcb0d12a6b573ce3d8f7b8623946e43a29';
   static lastCallback;
 
   /**
@@ -34,7 +34,7 @@ class VK {
             urlList.push(bigsize);
             }
         });
-        return urlList;
+        this.lastCallback(urlList);
     } else {
         alert('Ошибка :' + result['error']['error_code'] + '-' + result['error']['error_msg']);
     }
