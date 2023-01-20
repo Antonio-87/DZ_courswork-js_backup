@@ -50,6 +50,9 @@ class ImageViewer {
 
       if (e.target.classList.contains('send')) {
         let fileUploader = App.getModal('fileUploader');
+        let imagesActive = [...document.querySelectorAll('.four')].filter(el => el.classList.contains('selected'));
+        fileUploader.open();
+        fileUploader.showImages(imagesActive);
       }
 
     });

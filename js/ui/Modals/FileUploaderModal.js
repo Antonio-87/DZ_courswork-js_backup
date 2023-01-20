@@ -5,8 +5,8 @@
 class FileUploaderModal extends BaseModal {
   constructor(BaseModal) {
     super(BaseModal.element);
-    this.uploaderModal = document.querySelector('.file-uploader-modal');
-    this.content = this.uploaderModal.querySelector('.content');
+    this.element = document.querySelector('.file-uploader-modal');
+    this.content = this.element.querySelector('.content');
     this.registerEvents();
   }
 
@@ -20,7 +20,7 @@ class FileUploaderModal extends BaseModal {
    * отправляет одно изображение, если клик был по кнопке отправки
    */
   registerEvents(){
-    this.uploaderModal.addEventListener('click', (e) => {
+    this.element.addEventListener('click', (e) => {
       if (e.target.classList.contains('x')) {
         this.close();
       }
@@ -33,7 +33,7 @@ class FileUploaderModal extends BaseModal {
         this.sendAllImages();
       }
 
-      if (e.target.tagName = 'input') {
+      if (e.target.tagName == 'input') {
         e.target.closest('.input').classList.remove('error');
       }
 
@@ -47,7 +47,7 @@ class FileUploaderModal extends BaseModal {
    * Отображает все полученные изображения в теле всплывающего окна
    */
   showImages(images) {
-    let imagesRevers = images.revers();
+    let imagesRevers = images.reverse();
     imagesRevers.forEach(el => {
       this.content.innerHTML += this.getImageHTML(el);
     });
@@ -56,9 +56,9 @@ class FileUploaderModal extends BaseModal {
    * Формирует HTML разметку с изображением, полем ввода для имени файла и кнопкной загрузки
    */
   getImageHTML(item) {
-    `
+    return `
     <div class="image-preview-container">
-      <img src=${item} />
+      <img src=${item.querySelector('img').getAttribute('src')} />
       <div class="ui action input">
         <input type="text" placeholder="Путь к файлу">
         <button class="ui button"><i class="upload icon"></i></button>
@@ -80,12 +80,20 @@ class FileUploaderModal extends BaseModal {
    * Валидирует изображение и отправляет его на сервер
    */
   sendImage(imageContainer) {
-    let src = imageContainer.querySelector('img').getAttribute('src');
+    if (imageContainer == null) {return}
+    let url = imageContainer.querySelector('img').getAttribute('src');
     let path = imageContainer.querySelector('input').value.trim();
     if (path == '') {
       imageContainer.querySelector('.input').classList.add('error');
       return;
     };
     imageContainer.querySelector('.input').classList.add('disabled');
+    Yandex.uploadFile(path, url, () => {
+      imageContainer.remove();
+      if ([...this.content.querySelectorAll('.image-preview-container')].length < 1) {
+        this.close();
+      }
+    });
+    
   }
 }
