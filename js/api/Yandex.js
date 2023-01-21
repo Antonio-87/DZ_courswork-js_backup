@@ -23,13 +23,11 @@ class Yandex {
   static uploadFile(path, url, callback){
     callback(createRequest(`${this.HOST}/resources/upload`, {
       method: 'POST',
-      headers: {
-        'Authorization': `OAuth ${this.getToken()}`
-      },
-      body: JSON.stringify({
+      headers: {'Authorization': `OAuth ${this.getToken()}`},
+      body: {
         path: path,
         url: url
-      })
+      }
     }))
   }
 

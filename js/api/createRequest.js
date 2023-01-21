@@ -1,7 +1,7 @@
 /**
  * Основная функция для совершения запросов по Yandex API.
  * */
-const createRequest = (url, options) => {
+const createRequest = (url, options={}) => {
     fetch(url, options).then(response => {
         if (response.ok) {
             response.json().then(resp => {
