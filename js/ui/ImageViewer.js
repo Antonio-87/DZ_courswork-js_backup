@@ -28,17 +28,17 @@ class ImageViewer {
 
     body.addEventListener('click', (e) => {
       if (e.target.closest('.four')) {
-        e.target.closest('.four').classList.toggle('selected');
+        e.target.classList.toggle('selected');
         this.checkButtonText();
       };
 
       if (e.target.classList.contains('select-all')) {
         const images = [...document.querySelectorAll('.four')];
-        const imagesActive = images.filter(el => el.classList.contains('selected'));
-        if (imagesActive.length > 0) {
-          images.forEach(el => el.classList.remove('selected'));
+        const imagesActive = images.filter(el => el.querySelector('img').classList.contains('selected'));
+        if (imagesActive.length == images.length) {
+          images.forEach(el => el.querySelector('img').classList.remove('selected'));
         } else {
-          images.forEach(el => el.classList.add('selected'));
+          images.forEach(el => el.querySelector('img').classList.add('selected'));
         };
         this.checkButtonText();
       }
@@ -50,7 +50,7 @@ class ImageViewer {
 
       if (e.target.classList.contains('send')) {
         let fileUploader = App.getModal('fileUploader');
-        let imagesActive = [...document.querySelectorAll('.four')].filter(el => el.classList.contains('selected'));
+        let imagesActive = [...document.querySelectorAll('.four')].filter(el => el.querySelector('img').classList.contains('selected'));
         fileUploader.open();
         fileUploader.showImages(imagesActive);
       }
@@ -87,10 +87,10 @@ class ImageViewer {
    */
   checkButtonText(){
     const images = [...document.querySelectorAll('.four')];
-    const imagesActive = images.filter(el => el.classList.contains('selected'));
+    const imagesActive = images.filter(el => el.querySelector('img').classList.contains('selected'));
     const selectAll = document.querySelector('.select-all');
     const send = document.querySelector('.send');
-    if (images.length == imagesActive.length) {
+    if (imagesActive.length == images.length) {
       selectAll.textContent = 'Снять выделение';
     } else {
       selectAll.textContent = 'Выбрать все';
@@ -102,5 +102,4 @@ class ImageViewer {
       send.classList.add('disabled');
     };
   }
-
 }

@@ -32,7 +32,9 @@ class FileUploaderModal extends BaseModal {
       if (e.target.classList.contains('send-all')) {
         this.sendAllImages();
       }
-
+    });
+    
+    this.content.addEventListener('click', (e) => {
       if (e.target.tagName == 'input') {
         e.target.closest('.input').classList.remove('error');
       }
@@ -48,9 +50,11 @@ class FileUploaderModal extends BaseModal {
    */
   showImages(images) {
     let imagesRevers = images.reverse();
+    let imagesModal = []
     imagesRevers.forEach(el => {
-      this.content.innerHTML += this.getImageHTML(el);
+       imagesModal.push(this.getImageHTML(el));
     });
+    this.content.innerHTML = imagesModal.join('');
   }
   /**
    * Формирует HTML разметку с изображением, полем ввода для имени файла и кнопкной загрузки
@@ -80,7 +84,7 @@ class FileUploaderModal extends BaseModal {
    * Валидирует изображение и отправляет его на сервер
    */
   sendImage(imageContainer) {
-    if (imageContainer == null) {return}
+    // if (imageContainer == null) {return}
     let url = imageContainer.querySelector('img').getAttribute('src');
     let path = imageContainer.querySelector('input').value.trim();
     if (path == '') {
