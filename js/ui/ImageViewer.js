@@ -53,6 +53,7 @@ class ImageViewer {
         let imagesActive = [...document.querySelectorAll('.four')].filter(el => el.querySelector('img').classList.contains('selected'));
         fileUploader.open();
         fileUploader.showImages(imagesActive);
+        imagesActive.forEach(el => el.querySelector('img').classList.remove('selected'));
       }
 
     });

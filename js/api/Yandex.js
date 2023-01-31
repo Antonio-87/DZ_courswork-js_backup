@@ -21,14 +21,10 @@ class Yandex {
    * Метод загрузки файла в облако
    */
   static uploadFile(path, url, callback){
-    callback(createRequest(`${this.HOST}/resources/upload`, {
+    createRequest(`${this.HOST}/resources/upload/?path=${path}&url=${url}`, {
       method: 'POST',
       headers: {'Authorization': `OAuth ${this.getToken()}`},
-      body: {
-        path: path,
-        url: url
-      }
-    }))
+    },callback);
   }
 
   /**

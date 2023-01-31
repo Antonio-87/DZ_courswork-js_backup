@@ -32,6 +32,13 @@ class FileUploaderModal extends BaseModal {
       if (e.target.classList.contains('send-all')) {
         this.sendAllImages();
       }
+
+      if (e.target.classList.contains('common-path')) {
+        let commonPath = prompt('Введите общий путь для загрузки: ');
+        [...this.content.querySelectorAll('.image-preview-container')].forEach(el => {
+          el.querySelector('input').value = commonPath;
+        });
+      }
     });
     
     this.content.addEventListener('click', (e) => {
@@ -98,6 +105,5 @@ class FileUploaderModal extends BaseModal {
         this.close();
       }
     });
-    
   }
 }
