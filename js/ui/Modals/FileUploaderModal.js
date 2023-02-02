@@ -58,9 +58,7 @@ class FileUploaderModal extends BaseModal {
   showImages(images) {
     let imagesRevers = images.reverse();
     let imagesModal = []
-    imagesRevers.forEach(el => {
-       imagesModal.push(this.getImageHTML(el));
-    });
+    imagesRevers.forEach(el => imagesModal.push(this.getImageHTML(el)));
     this.content.innerHTML = imagesModal.join('');
   }
   /**
@@ -91,7 +89,6 @@ class FileUploaderModal extends BaseModal {
    * Валидирует изображение и отправляет его на сервер
    */
   sendImage(imageContainer) {
-    // if (imageContainer == null) {return}
     let url = imageContainer.querySelector('img').getAttribute('src');
     let path = imageContainer.querySelector('input').value.trim();
     if (path == '') {

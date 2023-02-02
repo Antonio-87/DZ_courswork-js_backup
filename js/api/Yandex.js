@@ -24,13 +24,17 @@ class Yandex {
     createRequest(`${this.HOST}/resources/upload/?path=${path}&url=${url}`, {
       method: 'POST',
       headers: {'Authorization': `OAuth ${this.getToken()}`},
-    },callback);
+    }, callback);
   }
 
   /**
    * Метод удаления файла из облака
    */
   static removeFile(path, callback){
+    createRequest(`${this.HOST}/resources/upload/?path=${path}`, {
+      method: 'DELETE',
+      headers: {'Authorization': `OAuth ${this.getToken()}`},
+    }, callback);
 
   }
 
@@ -38,13 +42,18 @@ class Yandex {
    * Метод получения всех загруженных файлов в облаке
    */
   static getUploadedFiles(callback){
-
+    createRequest(`${this.HOST}/resources/files`, {
+      method: 'GET',
+      headers: {'Authorization': `OAuth ${this.getToken()}`},
+    }, callback);
   }
 
   /**
    * Метод скачивания файлов
    */
   static downloadFileByUrl(url){
-
+    let a = document.createElement('a');
+    a.href = url;
+    a.click();
   }
 }
