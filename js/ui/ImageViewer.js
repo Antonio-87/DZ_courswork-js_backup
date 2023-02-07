@@ -46,7 +46,9 @@ class ImageViewer {
       if (e.target.classList.contains('show-uploaded-files')) {
         let filePreviewer = App.getModal('filePreviewer');
         filePreviewer.open();
-        Yandex.getUploadedFiles(filePreviewer.showImages);
+        let funcImagesBind = filePreviewer.showImages.bind(filePreviewer);
+        Yandex.getUploadedFiles(funcImagesBind);
+        
       }
 
       if (e.target.classList.contains('send')) {

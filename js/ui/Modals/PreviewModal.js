@@ -3,10 +3,10 @@
  * Используется как обозреватель загруженный файлов в облако
  */
 class PreviewModal extends BaseModal {
-  constructor(BaseModal) {
-    super(BaseModal.element);
+  constructor(element) {
+    super(element);
     this.element = document.querySelector('.uploaded-previewer-modal');
-    this.content = this.element.querySelector('.content')
+    this.content = this.element.querySelector('.content');
     this.registerEvents();
   }
 
@@ -26,17 +26,18 @@ class PreviewModal extends BaseModal {
 
     this.content.addEventListener('click', (e) => {
       if (e.target.classList.contains('delete')) {
-        e.target.querySelector('i').classList.add('icon spinner loading');
+        e.target.querySelector('i').className = 'icon spinner loading';
         e.target.classList.add('disabled');
-        Yandex.removeFile(e.target.dataset, (resp) => {
-          if (resp == null) {
+        const path = e.target.dataset.version != 'undefined'? `${e.target.dataset.path} ${e.target.dataset.version}`: e.target.dataset.path;
+        Yandex.removeFile(path, (resp) => {
+          if (typeof(resp) === 'object') {
             e.target.closest('.image-preview-container').remove();
           }
         });
       }
 
       if (e.target.classList.contains('download')) {
-        Yandex.downloadFileByUrl(e.target.dataset);
+        Yandex.downloadFileByUrl(e.target.dataset.file);
       }
 
     })
@@ -62,7 +63,7 @@ class PreviewModal extends BaseModal {
   formatDate(date) {
     const newDate = new Date(date);
     let day = newDate.getDate();
-    let month = new Intl.DateTimeFormat("ru-RU", {month: 'long'}).format(newDate.getMonth());
+    let month = new Intl.DateTimeFormat("ru-RU", {month: 'long'}).format(newDate.getMonth()).toLowerCase();
     let year = newDate.getFullYear();
     let hours = newDate.getHours();
     let minutes = newDate.getMinutes();
@@ -74,6 +75,7 @@ class PreviewModal extends BaseModal {
    * Возвращает разметку из изображения, таблицы с описанием данных изображения и кнопок контроллеров (удаления и скачивания)
    */
   getImageInfo(item) {
+    let version = item['path'].match(/\(.+\)/gm)? item['path'].match(/\(.+\)/gm)[0]: undefined;
     return `
       <div class="image-preview-container">
         <img src=${item['preview']} />
@@ -86,7 +88,7 @@ class PreviewModal extends BaseModal {
         </tbody>
         </table>
         <div class="buttons-wrapper">
-          <button class="ui labeled icon red basic button delete" data-path=${item['path']}>
+          <button class="ui labeled icon red basic button delete" data-path=${item['path']} data-version=${version}>
             Удалить
             <i class="trash icon"></i>
           </button>

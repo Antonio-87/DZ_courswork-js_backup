@@ -3,8 +3,8 @@
  * Используется как всплывающее окно для загрузки изображений
  */
 class FileUploaderModal extends BaseModal {
-  constructor(BaseModal) {
-    super(BaseModal.element);
+  constructor(element) {
+    super(element);
     this.element = document.querySelector('.file-uploader-modal');
     this.content = this.element.querySelector('.content');
     this.registerEvents();

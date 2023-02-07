@@ -5,7 +5,6 @@
 class BaseModal {
   constructor(element) {
     this.element = element;
-    // this.domElement = element[0];
   }
 
   /**

@@ -31,7 +31,7 @@ class Yandex {
    * Метод удаления файла из облака
    */
   static removeFile(path, callback){
-    createRequest(`${this.HOST}/resources/upload/?path=${path}`, {
+    createRequest(`${this.HOST}/resources/?path=${path}`, {
       method: 'DELETE',
       headers: {'Authorization': `OAuth ${this.getToken()}`},
     }, callback);

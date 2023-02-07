@@ -4,9 +4,7 @@
 const createRequest = (url, options={}, callback) => {
     fetch(url, options).then(response => {
         if (response.ok) {
-            response.json().then(resp => {
-                callback(resp);
-            })
+            response.text().then(text => text? callback(JSON.parse(text)): callback({}));
         } else {
             alert('Ошибка в HTTP:' + response.status);
         }

@@ -21,7 +21,7 @@ class SearchBlock {
       if (e.target == replace || e.target == add) {
         if (input.value.trim() != '') {
           if (e.target == replace) {
-            App.imageViewer.clear()
+            App.imageViewer.clear();
           } else {
             VK.get(input.value, App.imageViewer.drawImages);
           };
