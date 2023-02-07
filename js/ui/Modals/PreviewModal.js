@@ -39,11 +39,7 @@ class PreviewModal extends BaseModal {
       if (e.target.classList.contains('download')) {
         Yandex.downloadFileByUrl(e.target.dataset.file);
       }
-
     })
-    
-
-
   }
 
 
