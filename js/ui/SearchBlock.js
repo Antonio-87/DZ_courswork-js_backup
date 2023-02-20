@@ -23,7 +23,12 @@ class SearchBlock {
           if (e.target == replace) {
             App.imageViewer.clear();
           } else {
-            VK.get(input.value, App.imageViewer.drawImages);
+            try {
+              VK.get(input.value, App.imageViewer.drawImages);
+            }
+            catch (e) {
+              alert('Ошибка' + e.name + ':' + e.message);
+            }
           };
         };
       };

@@ -69,7 +69,7 @@ class FileUploaderModal extends BaseModal {
     <div class="image-preview-container">
       <img src=${item.querySelector('img').getAttribute('src')} />
       <div class="ui action input">
-        <input type="text" placeholder="Путь к файлу">
+          <input type="text" placeholder="Путь к файлу">
         <button class="ui button"><i class="upload icon"></i></button>
       </div>
     </div>
@@ -96,10 +96,15 @@ class FileUploaderModal extends BaseModal {
       return;
     };
     imageContainer.querySelector('.input').classList.add('disabled');
-    Yandex.uploadFile(path, url, () => {
-      imageContainer.remove();
-      if ([...this.content.querySelectorAll('.image-preview-container')].length < 1) {
-        this.close();
+    Yandex.uploadFile(path, url, (err) => {
+      if (err === false) {
+        imageContainer.querySelector('.input').classList.remove('disabled');
+        imageContainer.querySelector('input').value = '';
+      } else {
+        imageContainer.remove();
+        if ([...this.content.querySelectorAll('.image-preview-container')].length < 1) {
+          this.close();
+        }
       }
     });
   }

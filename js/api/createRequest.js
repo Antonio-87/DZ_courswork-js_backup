@@ -6,7 +6,8 @@ const createRequest = (url, options={}, callback) => {
         if (response.ok) {
             response.text().then(text => text? callback(JSON.parse(text)): callback({}));
         } else {
-            alert('Ошибка в HTTP:' + response.status);
+            alert('Ошибка в HTTP:' + response.status + '\n' + response.statusText);
+            callback(false);
         }
     });
 };
