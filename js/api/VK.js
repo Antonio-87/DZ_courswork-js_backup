@@ -5,7 +5,7 @@
  * Имеет свойства ACCESS_TOKEN и lastCallback
  * */
 class VK {
-  static ACCESS_TOKEN = process.env.VK_TOKEN;
+  static ACCESS_TOKEN = "";
   static lastCallback;
 
   /**
